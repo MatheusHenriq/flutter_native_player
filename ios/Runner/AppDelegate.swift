@@ -7,7 +7,10 @@ import Flutter
     _ application: UIApplication,
     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
   ) -> Bool {
-    GeneratedPluginRegistrant.register(with: self)
+      GeneratedPluginRegistrant.register(with: self)
+      weak var registrar = self.registrar(forPlugin: "plugin")
+      let factory = PlayerFactory(messanger: registrar!.messenger())
+      self.registrar(forPlugin: "flutter-native")!.register(factory, withId: "playerViewTag")
     return super.application(application, didFinishLaunchingWithOptions: launchOptions)
   }
 }

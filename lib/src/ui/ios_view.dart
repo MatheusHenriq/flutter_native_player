@@ -19,7 +19,7 @@ class IosView extends GetView<PlayerController> {
       creationParams: const {},
       onPlatformViewCreated: (value) async {
         controller.initPlayer(url);
-        //await controller.listenerPlayerEvents();
+        controller.listenerPlayerEvents();
       },
     );
   }
