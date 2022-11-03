@@ -2,7 +2,7 @@ import 'package:flutter/services.dart';
 import 'package:native_communication/src/controller/player_variables.dart';
 
 class PlayerMethods extends PlayerVariables {
-  Future initPlayer(String mediaUrl) async {
+  void initPlayer(String mediaUrl) async {
     try {
       await methodChannel.invokeMethod("initPlayer", {"mediaUrl": mediaUrl});
     } catch (e) {
@@ -10,11 +10,12 @@ class PlayerMethods extends PlayerVariables {
     }
   }
 
-  Future play() async {
+  void play() async {
     try {
       await methodChannel.invokeMethod(
         "play",
       );
+      isPlaying.value = true;
     } catch (e) {
       throw PlatformException(
         code: e.toString(),
@@ -22,11 +23,12 @@ class PlayerMethods extends PlayerVariables {
     }
   }
 
-  Future pause() async {
+  void pause() async {
     try {
       await methodChannel.invokeMethod(
         "pause",
       );
+      isPlaying.value = false;
     } catch (e) {
       throw PlatformException(
         code: e.toString(),

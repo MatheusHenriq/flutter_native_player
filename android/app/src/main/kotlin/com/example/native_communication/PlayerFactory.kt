@@ -9,6 +9,6 @@ import io.flutter.plugin.platform.PlatformViewFactory
 
 class PlayerFactory(private val flutterEngine: FlutterEngine, private val activity: FlutterActivity) : PlatformViewFactory(StandardMessageCodec.INSTANCE) {
     override fun create(context: Context, viewId: Int, args: Any?): PlatformView {
-        return PlayerView(context, flutterEngine, activity)
+        return PlayerView(context, flutterEngine, activity,)
     }
 }

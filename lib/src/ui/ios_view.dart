@@ -18,8 +18,8 @@ class IosView extends GetView<PlayerController> {
       creationParamsCodec: const StandardMessageCodec(),
       creationParams: const {},
       onPlatformViewCreated: (value) async {
-        await controller.initPlayer(url);
-        await controller.listenerPlayerEvents();
+        controller.initPlayer(url);
+        //await controller.listenerPlayerEvents();
       },
     );
   }

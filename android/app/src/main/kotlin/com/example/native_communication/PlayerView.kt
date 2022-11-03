@@ -10,11 +10,14 @@ import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.platform.PlatformView
 
-class PlayerView(context : Context, flutterEngine: FlutterEngine, private val activity: FlutterActivity) : PlatformView,  MethodChannel.MethodCallHandler{
+class PlayerView(context : Context, flutterEngine: FlutterEngine, private val activity: FlutterActivity,) : PlatformView,  MethodChannel.MethodCallHandler{
     private lateinit var exoPlayer: ExoPlayer
     private lateinit var playerView : StyledPlayerView
     private  var channelMethod : MethodChannel
     private val methodChannelName = "playerChannelTag"
+    private lateinit var playerListener : PlayerEventListener
+
+
     override fun getView(): StyledPlayerView {
         return this.playerView
     }
@@ -25,6 +28,7 @@ class PlayerView(context : Context, flutterEngine: FlutterEngine, private val ac
 
     init{
         channelMethod = MethodChannel(flutterEngine.dartExecutor.binaryMessenger, methodChannelName)
+        channelMethod.setMethodCallHandler(this)
         initilizePlayer(context,flutterEngine)
     }
 
@@ -36,7 +40,8 @@ class PlayerView(context : Context, flutterEngine: FlutterEngine, private val ac
         this.playerView = StyledPlayerView(context)
         this.playerView.player = this.exoPlayer
         this.playerView.useController = false
-
+        this.playerListener = PlayerEventListener(this.exoPlayer,flutterEngine)
+        this.exoPlayer.addListener(this.playerListener)
     }
 
     override fun onMethodCall(call: MethodCall, result: MethodChannel.Result) {

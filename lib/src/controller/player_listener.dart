@@ -1,13 +1,19 @@
+import 'dart:developer';
+
 import 'package:native_communication/src/controller/player_methods.dart';
 
-abstract class PlayerListener extends PlayerMethods {
+class PlayerListener extends PlayerMethods {
   Future listenerPlayerEvents() async {
     eventSubscription =
         listenerChannel.receiveBroadcastStream().listen((event) async {
-      switch (event) {
+      switch (event['PlayerEvent']) {
         case "isPlaying":
+          currentTime.value = int.tryParse(event["currentTime"]) ?? 10;
+          log("afdasfafs");
           break;
         case "isReady":
+          duration.value = int.tryParse(event["duration"]) ?? 10;
+
           break;
         default:
       }
